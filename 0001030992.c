@@ -1,10 +1,10 @@
 /*
     Michele     Olivieri    0001030992      A       michele.olivieri3@studio.unibo.it
-    ToDo: verifica con valgrind lanciando: valgrind ./nome_eseguibile nome_file_di_input
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define INF INT_MAX
 
@@ -17,7 +17,7 @@ typedef struct {
     int size, capacity;
 } MinHeap;
 
-/* inizializza l'heap vuoto con un vettore di capacity elementi*/
+/* inizializza l'heap vuoto con un vettore di capacity elementi */
 void heap_init(MinHeap *heap, int capacity);
 
 /* aggiunge un elemento all'heap */
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
     /* calcola il cammino di costo minimo e lo stampa */
     result = dijkstra(heights, n, m, Ccell, Cheight);
-    printf("%d", result);
+    printf("%d\n", result);
 
     /* libero la memoria allocata */
     for (i = 0; i < n; i++) free(heights[i]);
@@ -139,7 +139,7 @@ int dijkstra(int **heights, int n, int m, int Ccell, int Cheght) {
     }
     dist[0][0] = Ccell;
     
-    /* usiamo l'heap come priority queue per tenere traccia dei nodi da esplorare */
+    /* uso l'heap come priority queue per tenere traccia dei nodi da esplorare */
     heap_init(&heap, m * n);
     heap_push(&heap, current);
 
@@ -158,10 +158,10 @@ int dijkstra(int **heights, int n, int m, int Ccell, int Cheght) {
             if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
                 heightDiff = heights[x][y] - heights[nx][ny];
                 cost = Ccell + Cheght * heightDiff * heightDiff;
-                /* se il nuovo percorso ha un costo migliore viene aggiunto all'heap */
+                /* se il nuovo nodo ha un costo migliore viene aggiunto all'heap */
                 if (dist[x][y] + cost < dist[nx][ny]) {
                     dist[nx][ny] = dist[x][y] + cost;
-                    /* memorizzo il predecessore in modo da poter estrarre x e y */
+                    /* memorizzo questo numero che mi permette di estrarre il nodo (x,y) */
                     prev[nx][ny] = x * m + y; 
                     temp.x = nx;
                     temp.y = ny;
@@ -172,9 +172,9 @@ int dijkstra(int **heights, int n, int m, int Ccell, int Cheght) {
         }
     }
     
-    /* assegno il valore del costo del cammino minimo che ritornerà la mia funzione*/
+    /* assegno il valore del costo del cammino minimo che ritornerà la mia funzione */
     result = dist[n-1][m-1];
-    print_path(prev, m, n-1, m-1);
+    print_path(prev, m, n-1, m-1); /* stampo il percorso */
     printf("-1,-1\n"); /* indica la fine del percorso */
 
     /* libero la memoria precedentemente allocata */
