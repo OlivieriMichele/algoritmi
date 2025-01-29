@@ -113,12 +113,12 @@ Node heap_pop(MinHeap *heap) {
 /* stampa il percorso usando la ricorsione visto che partiamo dal nodo destinazione */
 void print_path( int **prev, int m, int x, int y) {
     if (prev[x][y] == -1) {
-        printf("%d,%d\n", x,y);
+        printf("%d %d\n", x,y);
         return;
     }
     /* risale il percorso e stampa dopo la ricorsione */
     print_path(prev, m, prev[x][y] / m, prev[x][y] % m);
-    printf("%d,%d\n", x, y);
+    printf("%d %d\n", x, y);
 }
 
 int dijkstra(int **heights, int n, int m, int Ccell, int Cheght) {
@@ -175,7 +175,7 @@ int dijkstra(int **heights, int n, int m, int Ccell, int Cheght) {
     /* assegno il valore del costo del cammino minimo che ritornerà la mia funzione */
     result = dist[n-1][m-1];
     print_path(prev, m, n-1, m-1); /* stampo il percorso */
-    printf("-1,-1\n"); /* indica la fine del percorso */
+    printf("-1 -1\n"); /* indica la fine del percorso */
 
     /* libero la memoria precedentemente allocata */
     for( i = 0; i < n; i++ ) {
